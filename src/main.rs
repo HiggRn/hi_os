@@ -18,8 +18,4 @@ fn panic(info: &PanicInfo) -> ! {
 pub extern "C" fn _start() -> ! {
     println!("Hello world{}", "!");
     panic!("Some panic message");
-
-    loop {
-        
-    }
 }

@@ -6,16 +6,31 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [profile.dev]
-panic = "abort"
+#panic = "abort"
 
 [profile.release]
-panic = "abort"
+#panic = "abort"
+
+[[test]]
+name = "should_panic"
+harness = false
 
 [dependencies]
 bootloader = "0.9"
-spin = "0.5.2"
-volatile = "0.2.6"
+spin = "0.9"
+uart_16550 = "0.2"
+volatile = "0.2"
+x86_64 = "0.14"
 
 [dependencies.lazy_static]
 version = "1.0"
 features = ["spin_no_std"]
+
+[package.metadata.bootimage]
+test-args = [
+    "-device", "isa-debug-exit,iobase=0xF4,iosize=0x04",
+    "-serial", "stdio",
+    "-display", "none"
+]
+test-success-exit-code = 33         # (0x10 << 1) | 1
+test-timeout = 300          # (in seconds)
